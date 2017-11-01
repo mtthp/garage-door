@@ -6,8 +6,8 @@
  */
 
 // WiFi parameters
-#define WIFI_SSID     ""
-#define WIFI_PASSWORD ""
+#define WIFI_SSID     "YOUR_SSID"
+#define WIFI_PASSWORD "YOUR_PASSWORD"
 
 // HTTP parameters
 #define HTTP_PORT   80

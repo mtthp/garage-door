@@ -16,7 +16,6 @@
 
 Servo servo;
 const int pin_servo = SERVO_PIN;
-int current_angle = 0;
 int current_speed = 0; // currently useless
 int modified = 0;
 
@@ -29,7 +28,6 @@ void setup() {
 
   // servo init
   servo.attach(pin_servo);
-  servo.write(current_angle);
 
   // wifi setup
   WiFi.mode(WIFI_STA);
@@ -58,7 +56,7 @@ void loop() {
  */
 void getStatus() {
   String message = "{";
-  message += "\"angle\": " + String(current_angle) + ",";
+  message += "\"angle\": " + String(servo.read()) + ",";
   //message += "\"speed\": " + String(current_speed) + ",";
   message += "\"uptime\": " + String(millis()) + ",";
   message += "\"modified\": " + String(modified);
@@ -121,13 +119,9 @@ void setupApi() {
 
   server.on("/toggle", HTTP_GET, []() {
     logAccess();
-    current_angle = 0;
-    servo.write(current_angle);
+    const int current_angle = servo.read();
+    servo.write(SERVO_TOGGLE_ANGLE);
     delay(500);
-    current_angle = SERVO_TOGGLE_ANGLE;
-    servo.write(current_angle);
-    delay(500);
-    current_angle = 0;
     servo.write(current_angle);
     modified = millis();
     getStatus();
@@ -137,8 +131,7 @@ void setupApi() {
     logAccess();
     for (uint8_t i=0; i<server.args(); i++){
       if (server.argName(i) == "angle") {
-        current_angle = server.arg(i).toInt();
-        servo.write(current_angle);
+        servo.write(server.arg(i).toInt());
         modified = millis();
       }
       if (server.argName(i) == "speed") {
