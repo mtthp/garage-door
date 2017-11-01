@@ -1,0 +1,21 @@
+{
+  "name": "garage-door",
+  "version": "0.1.0",
+  "description": "Opens the Garage Door through a Slack bot",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "garage",
+    "door"
+  ],
+  "author": "Matthieu Petit <mpetit@citizencam.eu>",
+  "license": "ISC",
+  "dependencies": {
+    "@slack/client": "^3.14.1",
+    "dotenv-extended": "^2.0.1"
+  },
+  "devDependencies": {}
+}
